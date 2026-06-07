@@ -517,7 +517,7 @@ SELECT
     MONTHNAME(p.payment_date) AS month_name,
     COUNT(DISTINCT p.booking_id) AS bookings_paid,
     SUM(p.amount_paid)           AS total_collected
-FROM payments
+FROM payments p
 WHERE p.payment_status = 'completed'
 GROUP BY YEAR(p.payment_date), MONTH(p.payment_date), MONTHNAME(p.payment_date)
 ORDER BY yr, mo;
@@ -563,7 +563,7 @@ SELECT
     COUNT(*)          AS transaction_count,
     SUM(p.amount_paid) AS total_collected,
     AVG(p.amount_paid) AS avg_transaction
-FROM payments
+FROM payments p
 WHERE p.payment_status = 'completed'
 GROUP BY p.payment_mode
 ORDER BY total_collected DESC;
@@ -680,7 +680,7 @@ SELECT
     COUNT(*)             AS bookings,
     ROUND(AVG(DATEDIFF(check_out, check_in)), 1) AS avg_stay_nights,
     SUM(total_amount)    AS monthly_revenue
-FROM bookings
+FROM bookings b
 WHERE YEAR(check_in) = 2024 AND status != 'cancelled'
 GROUP BY MONTH(check_in), MONTHNAME(check_in)
 ORDER BY MONTH(check_in);
